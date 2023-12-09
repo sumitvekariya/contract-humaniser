@@ -2,15 +2,16 @@ import { Source } from '@/lib/model'
 import React, { useEffect } from 'react'
 import { BiFolderMinus, BiFolderPlus, BiCodeBlock, BiFile } from "react-icons/bi";
 import { TreeView } from '@mui/x-tree-view/TreeView';
-import { CodeBlock, dracula, atomOneDark, CopyBlock, vs2015 } from 'react-code-blocks';
+import { CodeBlock, dracula, atomOneDark, CopyBlock, vs2015, solarizedLight, atomOneLight } from 'react-code-blocks';
 import { TreeItem, TreeItemProps, treeItemClasses } from '@mui/x-tree-view/TreeItem';
 import { alpha, styled } from '@mui/material/styles';
 import OpenAI from "openai";
-import { Button } from './ui/button';
+import { Box, Button, Modal } from '@mui/material';
 import { FaMagic } from "react-icons/fa";
-import { AlertDialog, AlertDialogAction, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from './ui/alert-dialog';
 import { CircularProgress } from '@mui/material';
-
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogActions from '@mui/material/DialogActions';
 const openai = new OpenAI({
   apiKey: process.env.NEXT_PUBLIC_OPEN_AI_KEY,
   dangerouslyAllowBrowser: true
@@ -34,6 +35,9 @@ const ContractCode = ({ sources = {}, contractName }: ContractCodeProps) => {
     path: '',
   });
   const isTypeOfSourceString = typeof sources === 'string';
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
 
   React.useEffect(() => {
@@ -150,8 +154,9 @@ const ContractCode = ({ sources = {}, contractName }: ContractCodeProps) => {
       }
       explainCode()
     }, [])
-    if (loading) return <CircularProgress className='m-auto' />
-    return <pre className='whitespace-pre-wrap'>{explanation}</pre>
+    if (loading) return <Box className='w-full h-full flex justify-center items-center my-5'><CircularProgress className='m-auto h-[]' /></Box>
+
+    return <pre className='whitespace-pre-wrap h-[80vh]'>{explanation}</pre>
   }
 
   return (
@@ -168,23 +173,7 @@ const ContractCode = ({ sources = {}, contractName }: ContractCodeProps) => {
         selectedFile?.code && <div className='flex flex-col gap-3'>
           <div className='flex gap-3 items-center'>
             <label className='font-bold'>{selectedFile?.path}</label>
-            <AlertDialog>
-              <AlertDialogTrigger>
-                <Button>Explain <FaMagic className={'w-5 h-5 ml-2 text-yellow-500'} /></Button>
-              </AlertDialogTrigger>
-              <AlertDialogContent className='w-[70vw] h-[auto]'>
-                <AlertDialogHeader>
-                  <AlertDialogTitle>{contractName} explanation using AI</AlertDialogTitle>
-                  <AlertDialogDescription>
-                    <CodeExplanationCard />
-                  </AlertDialogDescription>
-                </AlertDialogHeader>
-                <AlertDialogFooter>
-                  {/* <AlertDialogCancel>Cancel</AlertDialogCancel> */}
-                  <AlertDialogAction>Thanks</AlertDialogAction>
-                </AlertDialogFooter>
-              </AlertDialogContent>
-            </AlertDialog>
+            <Button variant='contained' onClick={handleOpen}>Explain <FaMagic className={'w-5 h-5 ml-2 text-yellow-500'} /></Button>
           </div>
           <div className='max-h-[100vh] max-w-[70vw] overflow-y-auto w-full'>
             <CopyBlock
@@ -195,11 +184,28 @@ const ContractCode = ({ sources = {}, contractName }: ContractCodeProps) => {
               text={selectedFile?.code}
               language={'solidity'}
               showLineNumbers={true}
-              theme={vs2015}
+              theme={atomOneLight}
             />
           </div>
         </div>
       }
+
+      <Modal
+        open={open}
+        onClose={handleClose}
+      >
+        <Box m={'auto'} mt={5} borderRadius={2} className='bg-white w-[70%]'>
+          <DialogTitle>
+            {contractName}.sol explanation using AI
+          </DialogTitle>
+          <DialogContent>
+            <CodeExplanationCard />
+          </DialogContent>
+          <DialogActions>
+            <Button variant='contained' onClick={handleClose}>Thanks</Button>
+          </DialogActions>
+        </Box>
+      </Modal>
 
     </div>
 

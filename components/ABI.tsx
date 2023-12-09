@@ -1,5 +1,5 @@
 import React from 'react'
-import { CodeBlock, CopyBlock, vs2015 } from 'react-code-blocks'
+import { CodeBlock, CopyBlock, vs2015, atomOneLight } from 'react-code-blocks'
 
 const ABI = ({ abi }) => {
   return (<div className='flex justify-center min-w-[70vw]'>
@@ -12,7 +12,7 @@ const ABI = ({ abi }) => {
         text={JSON.stringify(abi, null, "\t")}
         language={'json'}
         showLineNumbers={true}
-        theme={vs2015}
+        theme={atomOneLight}
       />
     </div>}
   </div>

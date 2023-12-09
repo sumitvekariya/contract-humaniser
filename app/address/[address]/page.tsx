@@ -93,7 +93,7 @@ const Page = () => {
         </Tabs>
       </Box>
 
-      <Box mt={3} mx={3} >
+      <Box my={3} mx={3} >
         {selectedTab == 0 && <ABI abi={abi} />}
         {selectedTab == 1 && <ContractCode sources={contractCode} contractName={contractName} />}
         {selectedTab == 2 && <Interact abi={abi} address={addressParam as string} />}

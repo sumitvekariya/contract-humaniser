@@ -110,7 +110,7 @@ export const DynamicForm = ({ contractFunction, contractData }: { contractFuncti
 
   const renderForm = () => {
     return contractFunction.inputs?.map((input) => (
-      <div key={input?.name} className='flex flex-col gap-4 mb-4'>
+      <div key={input?.name} className='flex flex-col gap-2 mb-4'>
         <label>{input?.name}</label>
         {renderInputField(input, input.name)}
       </div>

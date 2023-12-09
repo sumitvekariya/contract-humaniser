@@ -1,26 +1,19 @@
 import React, { useEffect, useState } from 'react'
-import { Input } from './ui/input';
-import { Accordion, AccordionDetails, AccordionSummary, CircularProgress, IconButton, Typography } from '@mui/material';
-import { ChevronUpIcon, ChevronDownIcon } from '@radix-ui/react-icons';
-import { useAccount, useChainId, useContractWrite, usePrepareContractWrite, useWalletClient } from 'wagmi';
-import { createPublicClient, createWalletClient, custom } from 'viem';
+import { Accordion, AccordionDetails, AccordionSummary, Box, CircularProgress, IconButton, Typography } from '@mui/material';
+import { ChevronDownIcon } from '@radix-ui/react-icons';
+import { useChainId } from 'wagmi';
 import { DynamicForm } from './DynamicForm';
 import { RiGasStationLine } from "react-icons/ri";
 import { FaGasPump } from "react-icons/fa6";
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { GasFeeEstimate } from '@/lib/model';
-import { Button } from './ui/button';
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
+import { Button } from '@mui/material';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogActions from '@mui/material/DialogActions';
+
+
+import Modal from '@mui/material/Modal';
 
 interface InteractABIProps {
   abi: any[],
@@ -83,21 +76,39 @@ const GasCard = () => {
             renderGasFeeEstimateCard(gasDetails.high, "High Gas Fee Estimate")}
         </div>
         <Card>
-          <CardContent>
-            <h2 className="font-semibold">Estimated Base Fee</h2>
-            <p>Gas Price: {gasDetails?.estimatedBaseFee}</p>
-            <h2 className="font-semibold">Network Congestion</h2>
-            <p>{gasDetails?.networkCongestion}</p>
-            <h2 className="font-semibold">Latest Priority Fee Range</h2>
-            <p>{gasDetails?.latestPriorityFeeRange?.join(" - ")}</p>
-            <h2 className="font-semibold">Historical Priority Fee Range</h2>
-            <p>{gasDetails?.historicalPriorityFeeRange?.join(" - ")}</p>
-            <h2 className="font-semibold">Historical Base Fee Range</h2>
-            <p>{gasDetails?.historicalBaseFeeRange?.join(" - ")}</p>
-            <h2 className="font-semibold">Priority Fee Trend</h2>
-            <p>{gasDetails?.priorityFeeTrend}</p>
-            <h2 className="font-semibold">Base Fee Trend</h2>
-            <p>{gasDetails?.baseFeeTrend}</p>
+          <CardContent className='flex flex-row gap-3'>
+            <div className='flex flex-col gap-2 w-[30%]'>
+              <h2 className="font-semibold">Estimated Base Fee</h2>
+              <p>Gas Price: {gasDetails?.estimatedBaseFee}</p>
+            </div>
+            <div className='flex flex-col gap-2 w-[30%]'>
+              <h2 className="font-semibold">Network Congestion</h2>
+              <p>{gasDetails?.networkCongestion}</p>
+            </div>
+            <div className='flex flex-col gap-2 w-[30%]'>
+              <h2 className="font-semibold">Latest Priority Fee Range</h2>
+              <p>{gasDetails?.latestPriorityFeeRange?.join(" - ")}</p>
+            </div>
+            <div className='flex flex-col gap-2 w-[30%]'>
+              <h2 className="font-semibold">Historical Priority Fee Range</h2>
+              <p>{gasDetails?.historicalPriorityFeeRange?.join(" - ")}</p>
+            </div>
+            <div className='flex flex-col gap-2 w-[30%]'>
+              <h2 className="font-semibold">Historical Base Fee Range</h2>
+              <p>{gasDetails?.historicalBaseFeeRange?.join(" - ")}</p>
+            </div>
+            <div className='flex flex-col gap-2 w-[30%]'>
+              <h2 className="font-semibold">Historical Base Fee Range</h2>
+              <p>{gasDetails?.historicalBaseFeeRange?.join(" - ")}</p>
+            </div>
+            <div className='flex flex-col gap-2 w-[30%]'>
+              <h2 className="font-semibold">Priority Fee Trend</h2>
+              <p>{gasDetails?.priorityFeeTrend}</p>
+            </div>
+            <div className='flex flex-col gap-2 w-[30%]'>
+              <h2 className="font-semibold">Base Fee Trend</h2>
+              <p>{gasDetails?.baseFeeTrend}</p>
+            </div>
           </CardContent>
         </Card>
       </div>}
@@ -112,25 +123,29 @@ const GasCard = () => {
 
 const Interact = ({ abi, address }: InteractABIProps) => {
   console.log(abi, address)
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   return (
     <div className='w-[60%] m-auto'>
-      <AlertDialog>
-        <AlertDialogTrigger>
-          <Button variant='outline' className='flex gap-2 mb-3'><span>Estimate</span><FaGasPump /></Button>
-        </AlertDialogTrigger>
-        <AlertDialogContent className='w-[70vw] h-[auto]'>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Metamask Gas API</AlertDialogTitle>
-            <AlertDialogDescription>
-              <GasCard />
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            {/* <AlertDialogCancel>Cancel</AlertDialogCancel> */}
-            <AlertDialogAction>Thanks</AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+      <Button variant={'outlined'} className='flex gap-2' style={{marginBottom: '10px', marginLeft: 'auto'}} onClick={handleOpen}><span>Estimate</span><FaGasPump /></Button>
+      <Modal
+        open={open}
+        onClose={handleClose}
+      >
+        <Box m={'auto'} mt={5} borderRadius={2} className='bg-white w-[70%]'>
+          <DialogTitle>
+            Current Gas Prices (Source: Metamask SDK)
+          </DialogTitle>
+
+          <DialogContent>
+            <GasCard />
+          </DialogContent>
+          <DialogActions>
+            <Button variant='contained' onClick={handleClose}>Thanks</Button>
+          </DialogActions>
+        </Box>
+      </Modal>
       {abi.filter(f => f?.type === 'function')?.map((a: any, i) => (
         <Accordion key={`${a.name}_${i}`}>
           <AccordionSummary
@@ -138,12 +153,12 @@ const Interact = ({ abi, address }: InteractABIProps) => {
             aria-controls="panel1a-content"
           >
             {/* <Typography> */}
-              <pre>{a.name}{`()`}{a.stateMutability === 'view' ? `:${a.outputs.map(o => o.type)}` : ''}</pre>
+            <pre>{a.name}{`()`}{a.stateMutability === 'view' ? `:${a.outputs.map(o => o.type)}` : ''}</pre>
             {/* </Typography> */}
           </AccordionSummary>
           <AccordionDetails>
             <Typography>
-              <div className='flex flex-col gap-2 overflow-x-auto'>
+              <div className='flex flex-col gap-2 overflow-x-auto flex-wrap'>
                 <DynamicForm contractFunction={a} contractData={{ abi, address }} />
               </div>
             </Typography>

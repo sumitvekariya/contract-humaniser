@@ -1,6 +1,7 @@
 // import Link from "next/link"
 
 import { ConnectButton } from "@rainbow-me/rainbowkit";
+import Image from "next/image";
 import 'node_modules/@rainbow-me/rainbowkit/dist/index.css';
 
 // import { siteConfig } from "@/config/site"
@@ -16,9 +17,10 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-14 items-center">
-        <h3 className="text-2xl font-bold">Smart Contract Humaniser</h3>
+        <Image src={"/logo.jpg"} className="mr-2 mt-1" width={45} height={45} alt="logo" />
+        <h3 className="text-2xl font-bold">Contract Humaniser</h3>
         <div className="ml-auto">
-          <ConnectButton/>
+          <ConnectButton />
         </div>
         {/* <MainNav />
         <MobileNav /> */}
