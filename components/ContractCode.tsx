@@ -84,7 +84,7 @@ const ContractCode = ({ sources = {}, contractName }: ContractCodeProps) => {
     }
 
 
-  }, [sources, contractName]);
+  }, [sources, contractName, isTypeOfSourceString]);
 
   const onSelectFile = (node) => {
     if (node?.code) {

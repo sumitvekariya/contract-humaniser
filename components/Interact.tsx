@@ -23,7 +23,7 @@ import {
 } from "@/components/ui/alert-dialog"
 
 interface InteractABIProps {
-  abi: [],
+  abi: any[],
   address: string
 }
 
