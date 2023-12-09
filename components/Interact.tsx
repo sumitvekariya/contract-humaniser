@@ -30,7 +30,7 @@ interface InteractABIProps {
 const GasCard = () => {
   const chainId = useChainId();
   const [loading, setLoading] = useState(false);
-  const [gasDetails, setGasDetails] = useState<GasFeeEstimate | null>(null)
+  const [gasDetails, setGasDetails] = useState(null)
   useEffect(() => {
     const fetchGasDetails = async () => {
       if (!chainId) return

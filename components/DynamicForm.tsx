@@ -1,7 +1,7 @@
 import { Button } from "@mui/material";
 import { useState } from "react";
 import { createPublicClient, createWalletClient, custom } from "viem";
-import { useAccount, useChainId } from "wagmi";
+import { useAccount, useChainId, useNetwork } from "wagmi";
 import { Input } from "./ui/input";
 
 interface InputComponent {
@@ -37,13 +37,14 @@ export const DynamicForm = ({ contractFunction, contractData }: { contractFuncti
   const [loading, setLoading] = useState(false);
   const [res, setRes] = useState<any>(null);
   const chainId = useChainId();
+  const { chain } = useNetwork();
   const { address } = useAccount();
 
   const walletClient = createWalletClient({
-    transport: custom(window.ethereum)
+    transport: custom((window as any).ethereum)
   })
   const publicClient = createPublicClient({
-    transport: custom(window.ethereum)
+    transport: custom((window as any).ethereum)
   })
 
   const handleInputChange = (path: string, value: string) => {
@@ -124,12 +125,9 @@ export const DynamicForm = ({ contractFunction, contractData }: { contractFuncti
       publicClient.readContract({
         abi: contractData.abi,
         functionName: contractFunction.name,
-        address: contractData.address,
+        address: contractData.address as `0x${string}`,
         args: Object.keys(formState).map(key => formState[key]),
-        account: address,
-        chain: {
-          id: chainId
-        }
+        account: address
       }).then(async (res: any) => {
         setRes(res);
         console.log(res);
@@ -140,12 +138,10 @@ export const DynamicForm = ({ contractFunction, contractData }: { contractFuncti
       walletClient.writeContract({
         abi: contractData.abi,
         functionName: contractFunction.name,
-        address: contractData.address,
+        address: contractData.address as `0x${string}`,
         args: Object.keys(formState).map(key => formState[key]),
         account: address,
-        chain: {
-          id: chainId
-        }
+        chain
       }).then(async (res: any) => {
         const receipt = await publicClient.waitForTransactionReceipt({ hash: res.hash })
         console.log(res);

@@ -27,7 +27,7 @@ interface TreeNode {
 }
 
 const ContractCode = ({ sources = {}, contractName }: ContractCodeProps) => {
-  const [treeData, setTreeData] = React.useState();
+  const [treeData, setTreeData] = React.useState([]);
   const [selectedFile, setSelectedFile] = React.useState({
     name: '',
     code: '',
