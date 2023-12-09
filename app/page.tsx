@@ -92,7 +92,7 @@ export default function Home() {
               For Everyone
             </h2>
             <p className="pt-4 pb-8 m-0 leading-7 text-gray-700 border-0 border-gray-300 sm:pr-10 lg:text-lg">
-            From students exploring blockchain to entrepreneurs navigating the space, contract Humanizer's user-friendly explanations make smart contracts accessible to all
+            From students exploring blockchain to entrepreneurs navigating the space, contract Humanizer&apos;s user-friendly explanations make smart contracts accessible to all
             </p>
             <ul className="p-0 m-0 leading-6 border-0 border-gray-300">
               <li className="box-border relative py-1 pl-0 text-left text-gray-500 border-solid">
@@ -102,7 +102,7 @@ export default function Home() {
                 <span className="inline-flex items-center justify-center w-6 h-6 mr-2 text-white bg-slate-700 rounded-full"><span className="text-sm font-bold">✓</span></span> No coding expertise required
               </li>
               <li className="box-border relative py-1 pl-0 text-left text-gray-500 border-solid">
-                <span className="inline-flex items-center justify-center w-6 h-6 mr-2 text-white bg-slate-700 rounded-full"><span className="text-sm font-bold">✓</span></span> Ensuring that the world of blockchain isn't just for developers – it's for you too
+                <span className="inline-flex items-center justify-center w-6 h-6 mr-2 text-white bg-slate-700 rounded-full"><span className="text-sm font-bold">&lsquo;</span></span> Ensuring that the world of blockchain isn&apos;t just for developers – it&apos;s for you too
               </li>
             </ul>
           </div>
