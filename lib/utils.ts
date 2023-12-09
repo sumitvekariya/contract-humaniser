@@ -11,7 +11,7 @@ export function cn(...inputs: ClassValue[]) {
 export function resolveEtherscanURL(chain: Chain): string {
   switch (chain.id) {
     case mainnet.id:
-      return "https://etherscan.io"
+      return "https://api.etherscan.io"
     case goerli.id:
       return "https://api-goerli.etherscan.io"
     case sepolia.id:

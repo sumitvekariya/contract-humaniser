@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 import TextField from '@mui/material/TextField';
-import { Box, Tab, Tabs } from '@mui/material';
+import { Box, CircularProgress, Tab, Tabs } from '@mui/material';
 import { useParams, useRouter } from 'next/navigation';
 import ABI from '@/components/ABI';
 import ContractCode from '@/components/ContractCode';
@@ -23,7 +23,9 @@ const Page = () => {
   const [contractCode, setContractCode] = useState<Source>();
   const [contractName, setContractName] = useState<string>('');
   const { chain } = useNetwork();
-  const { fetchABI } = useFetchABI(chain?.id)
+  const { fetchABI } = useFetchABI(chain?.id);
+
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (!address) return
@@ -33,6 +35,7 @@ const Page = () => {
 
   const fetchContractData = async () => {
     if (!addressParam) return
+    setLoading(true);
     try {
       const resolvedAPI = resolveEtherscanURL(chain);
       if (resolvedAPI) {
@@ -49,7 +52,7 @@ const Page = () => {
           if (!data.result[0]) return
           const source = data.result[0].SourceCode;
           let cleanedUpData;
-          if (source[0] == '{') {
+          if (source && source[0] == '{') {
             cleanedUpData = source.slice(1, source.length - 1);
             setContractCode(JSON.parse(cleanedUpData)?.sources);
           } else {
@@ -73,6 +76,7 @@ const Page = () => {
     } catch (error) {
 
     }
+    setLoading(false);
   }
 
   return (
@@ -94,9 +98,11 @@ const Page = () => {
       </Box>
 
       <Box my={3} mx={3} >
-        {selectedTab == 0 && <ABI abi={abi} />}
-        {selectedTab == 1 && <ContractCode sources={contractCode} contractName={contractName} />}
-        {selectedTab == 2 && <Interact abi={abi} address={addressParam as string} />}
+
+        {loading && <div className='flex mt-5'><CircularProgress className='m-auto' /></div>}
+        {!loading && selectedTab == 0 && <ABI abi={abi} />}
+        {!loading && selectedTab == 1 && <ContractCode sources={contractCode} contractName={contractName} />}
+        {!loading && selectedTab == 2 && <Interact abi={abi} address={addressParam as string} />}
       </Box>
 
     </div>

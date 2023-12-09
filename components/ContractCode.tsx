@@ -156,7 +156,7 @@ const ContractCode = ({ sources = {}, contractName }: ContractCodeProps) => {
     }, [])
     if (loading) return <Box className='w-full h-full flex justify-center items-center my-5'><CircularProgress className='m-auto h-[]' /></Box>
 
-    return <pre className='whitespace-pre-wrap h-[80vh]'>{explanation}</pre>
+    return <pre className='whitespace-pre-wrap max-h-[80vh]'>{explanation}</pre>
   }
 
   return (
