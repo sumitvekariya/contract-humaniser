@@ -11,7 +11,7 @@ export interface GasFeeEstimate {
   maxWaitTimeEstimate: number;
 }
 
-export nterface GasFeesApiResponse {
+export interface GasFeesApiResponse {
   low: GasFeeEstimate;
   medium: GasFeeEstimate;
   high: GasFeeEstimate;
