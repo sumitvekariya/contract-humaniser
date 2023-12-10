@@ -1,5 +1,3 @@
-Smart Contract Simplifier
-
 ## Getting Started
 
 First, run the development server:
