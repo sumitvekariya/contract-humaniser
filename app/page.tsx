@@ -7,7 +7,7 @@ export default function Home() {
     {
       name: "Ethereum Mainnet",
       logo: "https://ethereum.org/static/5558555c50f38070106a0edbeb32a4be/a677a/eth-diamond-purple-white.jpg",
-      address: "0x3889927F0B5Eb1a02C6E2C20b39a1Bd4EAd76131"
+      address: "0x00000000000000ADc04C56Bf30aC9d3c0aAF14dC"
     },
     {
       name: "Goerli",

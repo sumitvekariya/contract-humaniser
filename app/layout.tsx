@@ -7,8 +7,8 @@ import { Providers } from './providers'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Smart Contract Humaniser',
-  description: 'Smart Contract Humaniser',
+  title: 'Smart Contract Simplifier',
+  description: 'Smart Contract Simplifier',
 }
 
 export default function RootLayout({
@@ -17,8 +17,8 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
+    <html lang="en" className='h-[100vh]'>
+      <body className={`${inter.className}` + 'h-[100vh]'}>
         <Providers>
           <Header />
           {children}

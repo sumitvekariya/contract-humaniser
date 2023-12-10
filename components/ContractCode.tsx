@@ -173,7 +173,7 @@ const ContractCode = ({ sources = {}, contractName }: ContractCodeProps) => {
         selectedFile?.code && <div className='flex flex-col gap-3'>
           <div className='flex gap-3 items-center'>
             <label className='font-bold'>{selectedFile?.path}</label>
-            <Button variant='contained' onClick={handleOpen}>Explain <FaMagic className={'w-5 h-5 ml-2 text-yellow-500'} /></Button>
+            <Button style={{ marginLeft: 'auto' }} variant='contained' onClick={handleOpen}>Explain <FaMagic className={'w-5 h-5 ml-2 text-yellow-500'} /></Button>
           </div>
           <div className='max-h-[100vh] max-w-[70vw] overflow-y-auto w-full'>
             <CopyBlock

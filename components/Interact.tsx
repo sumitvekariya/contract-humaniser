@@ -3,7 +3,6 @@ import { Accordion, AccordionDetails, AccordionSummary, Box, CircularProgress, I
 import { ChevronDownIcon } from '@radix-ui/react-icons';
 import { useChainId } from 'wagmi';
 import { DynamicForm } from './DynamicForm';
-import { RiGasStationLine } from "react-icons/ri";
 import { FaGasPump } from "react-icons/fa6";
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { GasFeeEstimate } from '@/lib/model';
@@ -128,7 +127,7 @@ const Interact = ({ abi, address }: InteractABIProps) => {
   const handleClose = () => setOpen(false);
   return (
     <div className='w-[60%] m-auto'>
-      <Button variant={'outlined'} className='flex gap-2' style={{marginBottom: '10px', marginLeft: 'auto'}} onClick={handleOpen}><span>Estimate</span><FaGasPump /></Button>
+      <Button variant={'outlined'} className='flex gap-2' style={{ marginBottom: '10px', marginLeft: 'auto' }} onClick={handleOpen}><span>Estimate</span><FaGasPump /></Button>
       <Modal
         open={open}
         onClose={handleClose}
@@ -154,6 +153,10 @@ const Interact = ({ abi, address }: InteractABIProps) => {
           >
             {/* <Typography> */}
             <pre>{a.name}{`()`}{a.stateMutability === 'view' ? `:${a.outputs.map(o => o.type)}` : ''}</pre>
+            {<span className="ml-auto bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">
+              {a.stateMutability === 'view' ? 'Read' : 'Write'}
+            </span>
+            }
             {/* </Typography> */}
           </AccordionSummary>
           <AccordionDetails>
