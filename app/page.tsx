@@ -1,6 +1,5 @@
-import Image from 'next/image'
+"use client"
 import Link from 'next/link';
-import { mainnet } from 'wagmi'
 
 export default function Home() {
   const chainsSupported = [
