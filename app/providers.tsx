@@ -29,10 +29,10 @@ const { chains, publicClient, webSocketPublicClient } = configureChains(
   [
     mainnet,
     polygon,
-    optimism,
-    arbitrum,
+    // optimism,
+    // arbitrum,
     base,
-    zora,
+    // zora,
     polygonZkEvm,
     ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true' ? [goerli] : []),
   ],
