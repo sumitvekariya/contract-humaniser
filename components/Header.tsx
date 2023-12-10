@@ -18,7 +18,7 @@ export function Header() {
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-14 items-center">
         <Image src={"/logo.jpg"} className="mr-2 mt-1" width={45} height={45} alt="logo" />
-        <h3 className="text-2xl font-bold">Contract Humaniser</h3>
+        <h3 className="text-2xl font-bold">Contract Simplifier</h3>
         <div className="ml-auto">
           <ConnectButton />
         </div>
